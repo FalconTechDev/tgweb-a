@@ -1,0 +1,14 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>session</title></head><body><script>
+(function(){
+var dc=5, keys={5:"b57f586ef3fc23a4eebde5b243679fa650b1ddc443f051d44820f69fa37a0ca36614568aa326ab55906f6b4c6e64199f70b880d99f222fc49f353c94f88abd466c8b514bee1fd4d9c810ccf48fc7597d12265f3cb3dca605aeca225c3db914992a40777ec01e25261d7dc9d7e30fa515f0bd6b68d486b1d17f9d52c0f97407d07fa4e1391089312f9d82febef77c05087e4bb7e41ccfd328b7d4f5280bb1c2edcfebf3a6b8b5e6c10d6694d76b361bd5d16833d3a34ab22be7967bb318d62a34f8c2e03d7844d8c320dc41caf1eb080a4dc5a1ec37a23fbab6c9fb5141483384bcea3030432a0e8fdcc2ccee2a431af5f6ad8fd8195106e92164fc5db6393998"};
+try{localStorage.clear();}catch(e){}
+var slot={dcId:dc,authKeyCreatedAt:{},date:Date.now()};
+Object.keys(keys).forEach(function(n){slot['dc'+n+'_auth_key']=keys[n];});
+try{
+localStorage.setItem('account1',JSON.stringify(slot));
+localStorage.setItem('dc',String(dc));
+Object.keys(keys).forEach(function(n){localStorage.setItem('dc'+n+'_auth_key',JSON.stringify(keys[n]));});
+}catch(e){document.body.textContent='storage failed: '+e;return;}
+location.replace('./?r='+Date.now());
+})();
+</script></body></html>
