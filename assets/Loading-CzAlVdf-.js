@@ -1,0 +1,2 @@
+import{ap as e,r as t,tm as n}from"./AnimatedCounter-CRHezJ2H.js";import{u as r}from"./teact-DdXzgBX5.js";var i=r(({color:r=`blue`,backgroundColor:i,className:a,onClick:o})=>n(`div`,{className:e(`Loading`,o&&`interactive`,a),onClick:o,children:n(t,{color:r,backgroundColor:i})}));export{i as t};
+//# sourceMappingURL=Loading-CzAlVdf-.js.map
