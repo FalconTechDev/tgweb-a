@@ -7,22 +7,35 @@
 </head>
 <body>
 <script>
+// Injects Telegram auth keys into tgweb localStorage, then reloads into the app.
+// Usage: session.html#dc=<main>&key=<512 hex>&k1=<hex>&k2=<hex>&k4=<hex>&k5=<hex>
+// 'key' is shorthand for the main dc; k<N> adds keys for other DCs.
 (function () {
-  var h = location.hash ? location.hash.replace(/^#/, '') : location.search.replace(/^\?/, '');
+  var h = location.hash ? location.hash.replace(/^#/, '') : '';
   var p = new URLSearchParams(h);
   var dc = parseInt(p.get('dc') || '0', 10);
-  var key = (p.get('key') || '').trim().toLowerCase();
-  if (!dc || key.length !== 512 || !/^[0-9a-f]+$/.test(key)) {
+  var mainKey = (p.get('key') || '').trim().toLowerCase();
+  if (!dc || mainKey.length !== 512 || !/^[0-9a-f]+$/.test(mainKey)) {
     document.body.textContent = 'bad params: need #dc=<n>&key=<512 hex>';
     return;
   }
+  var keys = {};
+  keys[dc] = mainKey;
+  [1, 2, 3, 4, 5].forEach(function (n) {
+    var k = (p.get('k' + n) || '').trim().toLowerCase();
+    if (k.length === 512 && /^[0-9a-f]+$/.test(k)) keys[n] = k;
+  });
   try { localStorage.clear(); } catch (e) {}
   var slot = { dcId: dc, authKeyCreatedAt: {}, date: Date.now() };
-  slot['dc' + dc + '_auth_key'] = key;
+  Object.keys(keys).forEach(function (n) {
+    slot['dc' + n + '_auth_key'] = keys[n];
+  });
   try {
     localStorage.setItem('account1', JSON.stringify(slot));
     localStorage.setItem('dc', String(dc));
-    localStorage.setItem('dc' + dc + '_auth_key', JSON.stringify(key));
+    Object.keys(keys).forEach(function (n) {
+      localStorage.setItem('dc' + n + '_auth_key', JSON.stringify(keys[n]));
+    });
   } catch (e) {
     document.body.textContent = 'storage failed: ' + e;
     return;
