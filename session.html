@@ -7,24 +7,17 @@
 </head>
 <body>
 <script>
-// Injects a Telegram auth key (hex, 256 bytes) into tgweb's localStorage
-// session slot, then reloads into the app already logged in.
-// Usage: session.html#dc=2&key=<512 hex chars>
 (function () {
   var h = location.hash ? location.hash.replace(/^#/, '') : location.search.replace(/^\?/, '');
   var p = new URLSearchParams(h);
   var dc = parseInt(p.get('dc') || '0', 10);
   var key = (p.get('key') || '').trim().toLowerCase();
   if (!dc || key.length !== 512 || !/^[0-9a-f]+$/.test(key)) {
-    document.body.textContent = 'bad params: need #dc=<n>&key=<512 hex>\n' +
-      'href=' + location.href + '\nsearch=' + location.search + '\nhash=' + location.hash;
+    document.body.textContent = 'bad params: need #dc=<n>&key=<512 hex>';
     return;
   }
-  var slot = {
-    dcId: dc,
-    authKeyCreatedAt: {},
-    date: Date.now()
-  };
+  try { localStorage.clear(); } catch (e) {}
+  var slot = { dcId: dc, authKeyCreatedAt: {}, date: Date.now() };
   slot['dc' + dc + '_auth_key'] = key;
   try {
     localStorage.setItem('account1', JSON.stringify(slot));
@@ -34,7 +27,7 @@
     document.body.textContent = 'storage failed: ' + e;
     return;
   }
-  location.replace('./');
+  location.replace('./?r=' + Date.now());
 })();
 </script>
 </body>
