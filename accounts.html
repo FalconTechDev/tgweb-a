@@ -1,19 +1,66 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>accounts</title>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TG Web</title>
 <style>
-body{margin:0;font-family:-apple-system,Roboto,sans-serif;background:#0e1621;color:#fff;display:flex;flex-direction:column;align-items:center;padding:24px 16px}
-h2{font-weight:500;margin:8px 0 20px}
-button{display:block;width:100%;max-width:360px;margin:8px 0;padding:16px;border:0;border-radius:12px;background:#182533;color:#fff;font-size:17px;text-align:left;cursor:pointer}
-button small{display:block;color:#7d8b99;font-size:13px;margin-top:4px}
-button:active{background:#2b5278}
-</style></head><body>
-<h2>������ �������</h2>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  background:linear-gradient(180deg,#0e1621 0%,#17212b 100%);
+  color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Roboto','Segoe UI',sans-serif;
+  padding:32px 16px calc(32px + env(safe-area-inset-bottom));
+}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.header .logo{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#4a9eff,#7c5cff);display:flex;align-items:center;justify-content:center;font-size:22px}
+.header h1{font-size:20px;font-weight:600;margin:0}
+.header span{display:block;font-size:13px;color:#7d8b99;font-weight:400}
+.card{
+  display:flex;align-items:center;gap:14px;width:100%;max-width:400px;
+  padding:14px;margin-bottom:10px;border:0;border-radius:16px;cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  color:#fff;text-align:left;font-family:inherit;
+  transition:transform .12s ease,background .12s ease;
+}
+.card:active{transform:scale(.98);background:rgba(74,158,255,.15)}
+.avatar{
+  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:600;color:#fff;
+}
+.info{flex:1;min-width:0}
+.name{font-size:16px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{font-size:13px;color:#7d8b99;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc{font-size:11px;color:#5eb5f7;background:rgba(94,181,247,.12);border-radius:20px;padding:3px 8px;flex-shrink:0}
+.footer{margin-top:auto;padding-top:24px;font-size:12px;color:#54636f}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">✈</div>
+  <div><h1>TG Web</h1><span>выбери аккаунт</span></div>
+</div>
 <div id="list"></div>
+<div class="footer">сессия не покидает это устройство</div>
 <script>
-var ACCOUNTS = [{"name": "sonikvsc", "dc": 2, "keys": {"1": "bd8276cbf4abc7132c267fa69cff7101c6185d7a0063bef9e25880c6537f04a2da127e715e5ea7f254292b368fc5a5f5f8552675ee2b63023b732daad140582f07d6ee792af70666786a0d44c1d2c6a775b54e1be2ca3deba72ce7b4bd073c13cd157de12caa4cf28487c750b619b54ecc7113d10862036b26dcda2205f5ccf3a04a5ab49e02ed77c6da618c214b14d1c814d26a07e7af090ff265088d2a509b403f70644288485f6a2a53aaba565491489dddbec13dbbc0a6450bdb223eaa35bb6626785346fa51aff10706348ae5f921d548da4ad04b10eca4a0f8359bf3406792e9b090d3f3a6d3a15f4bb4efdb35fdf4b36cb9a3645ae8cdc1f427bcd1af", "2": "077656533fcfbd4bb7d8d8e476c612fd705acf73872f6ecf562f863fb73a2fc84c235b7ff76030fb20fc6cd996313cf9b96e821251e7e7c66ba6d29b9855c32d3863bb798484d8ff650f71897aee911b931b7c321a944e8f6e8cacf1a3061e23638418580b617f1d95c4f401c91d8adf4c0df5bd5ef8293d15bf3cfd8a3fa8b6d6e080cfdeddcd95239c1710a4e2b2281c2f112126428f96615ca558bae93f7d46d0e759651730970b0797057270fc35c37ed1ba3c28404116ecd2cf200eaeaa72ef334876a91cc54635237f5053d005c4ff4ee1007a5432ed7490358d6a1f6fd38d13bce7f3bca953e94098b7cc563b55d31be686bbb9e50cceb81fcf0449b4", "4": "291519e610cff87574187370ebf363e2b20cff524fb875f8c0b614207939d6b593228a7d650d11e2ca8d70df7cbc2c7c300405a13b34fc5b70c3a9cbff22796a24e639cc159babe668ae0269fd1b8e23cd79b5114ead49c2df91023dc1088b51136714846ff051b01247de498370bf5d39668e792c2d433a5dacfb5d3d7d4643002d5ad0544c19356bf04938139b176420bc7591f176010232ae9dae421b2e52249a1e7fddf7ad4b8649587887160460315643c848ab25ad75b5458e3b600e950a52bd1e2bea2e5f17b2b7b16757aa08aaa2910345bfa06f6223b8bfb747fa98792294594125fed92af74cd076d7967a41bc8ef5209f2cb0d107b7e6cdbf2558", "5": "b47dbfca101b19a5680a28d9d0811ad66665de619c4698f2bd5b9c16baeb0dd5c354e901d28968f8e271829d2532699dd8be2de5bb281e2c881c6bd54e5c7a6179ca3868ce0d2ff9367d47e12de6e6e274c7e9d881a62facdebcd91c37e1c9691b06f9161a2cd6c30ac9d3b58cff4e2e74f39a8dab0f8a04886de8da0e81783b188d64cf47b84695f1d9e0354ddb8c8c66bf094f1973e0e3a43cd23b07d1a30d9c328a13927ff181c9a36f234bf28624a6e5a34caaba8e4a364c789d772cd6881f9e06e4020027bf3a9a49c6bfa33b9e507a9d0219c3d63b81e597b3217bc128676013fac7ec3014c473e15a7fbfc4b5e45d5887f6edb717efd5789022a966f2"}}, {"name": "dapi_arbuzin", "dc": 2, "keys": {"1": "b6f53de2520ccf6efdb616ef987fcb0bf1705ffb7bca07d02eb0818ecbda8b547140019da95f515841f04ff889e98db9e3e8588e7d1e9495080dcbb777f5033c123484aa6aea218c502b39a785eab998d8db5420b8d8b69bd370a2c374f60ddfa4606cfb815defc502f0e68d3d5d5e40488d881167034920d531beec09e89febff64cdd7fa6bd4f811337c31266cb2c1cce2ed789000aa9a59fb97fe787a62aac95356602468f021fb999e9907405c8d3a37d16d4957249d95c8a711046ccba9bbb81c295ecd89b62077709a02b23edb7fd168b2b1cc20ce35420c3b35b174531710e503e308409ed8b1963c74c88231ad5d21a6f931060f0c14f3a32cbc001f", "2": "643f9611837c062f5f750b1924129239be8ad422e81d92652300a180b0e55c391d745afa547610c34fc66c8af846291fbc95fd6e3c4b3ae9cdcca8ea4bfe4356a4f0ea1c7d541db95075e19a3e5d63900d518edd964f91551ad6e41dc7ec91a5bbc7691c4be5a6c7c15d98decfea9a5eb26459780eb4558dde5a7d51985aa2d7e57185404ba0597e443c5f2fa461866f528cf0e85ff7dcd63a16fda58f9771b1021844a483b00ec2e30f70ee7388e4dfcc6d4c3763a6eea0ab195a8cd3bdb5f71d96a2ced1c9b2d566fe05d69cc400a443ed9a4efc109ce56633f2cad38c21f3c2b7701bc442aa1044ebe5d4bbe534929a2f435d836408e37cf8f02cd39e707a", "3": "1f9fadedcd6a21c4a1c78ab40f2e2a5c576953c200c584b4ece8755526e86b335ef4072581695333f1fc619a04667411c962a52e905eaa7e9c09bf35b5fa15e4b554f69511e69efdc7dc036bfd62cdc35dc9f33025f366387c2f83c56d846dd2b14f4292e8c7e69acc92a85b34fe3fdaf3b58418c9c7eb9367b8e8dc66123df6de5fab7902fafd76283aa0a332d8d0768b262085323455bceb0ec68b45b771a739692b6c22910395335e9c983b9de02c089ae384003d7186faac99ae4bdf526e641ddbf68ea4549cd027736f87032e49a238c296171dba179ddf7abfc5eead0867cb71bae95042c23a63ed528437bd9bb8d14c0d3dbe4707f67b8ea565baf75c", "4": "8b2f5551be6d01f6cb6a43ecb8deb4a77bafefce11a01e7b3ff5bac3e5f563312e341343132e17e523a03ce77367117d01f06e205c2de7fe30087d675eebef4fd8871a16c5dc00fa31743c5e92d416343aba53100c74147f5dc7a5d1c835bfc3a55ef0bf65caae9af3e6020a9f1b5fb67aaaa687c09a67588419d17490dde8848cfb39a1441a8d8e2b35835ea13bfa606db6c9f467cdb81316ee0de85962b61d5c9f9f6333e5c65db912861fc6ebb02651f9a05d32bc294f4c7b7f95ad4d34cbe33297139c1703fd3f3dd7d0be7ed717375cb2d3a6ef0851d859d443843fc20c1877f8258a05d393435560172cdd7b45872a0356d8918bef91455f698aef5f04", "5": "8138035703b9070822e7846e3ee8534c023b4083140a7b1ca9adacc4cfeeeda0df8947260d77c2b46920d11ccede1942a126c25e091197fc8a80d2fb4e2c77a3a48f911d5cf5f4c336070425d048f8d7ecf3b0318b32ef1a14db90909f8b48190fbebdd1aa6a210575f76adebd90123759e81b82771ca294d6897ea499b755f1f7d3d425dfee6da339a500e4ee9713f72f849a738c69983b5efb4aca3e5cda8c3b998f5b5ce2c4f578f1ae393fc17e268d750aef2d91b4b151d005a1beeb21c27db4855b7f6d125eba673e518611b2284e9ad6229ab4312f172e005220d01de1ce7856613a573b1b7bf2d908b9e7d6c5eec60fd62102edfbcf3693aa706c98d8"}}, {"name": "acc_272711402", "dc": 5, "keys": {"5": "b57f586ef3fc23a4eebde5b243679fa650b1ddc443f051d44820f69fa37a0ca36614568aa326ab55906f6b4c6e64199f70b880d99f222fc49f353c94f88abd466c8b514bee1fd4d9c810ccf48fc7597d12265f3cb3dca605aeca225c3db914992a40777ec01e25261d7dc9d7e30fa515f0bd6b68d486b1d17f9d52c0f97407d07fa4e1391089312f9d82febef77c05087e4bb7e41ccfd328b7d4f5280bb1c2edcfebf3a6b8b5e6c10d6694d76b361bd5d16833d3a34ab22be7967bb318d62a34f8c2e03d7844d8c320dc41caf1eb080a4dc5a1ec37a23fbab6c9fb5141483384bcea3030432a0e8fdcc2ccee2a431af5f6ad8fd8195106e92164fc5db6393998"}}, {"name": "acc_272527189", "dc": 5, "keys": {"5": "8764a0d61dcb74776850e690cb99661d3c2cb21b973bde7d01531c181283e101a935a79ba36e16fc3e031bb00817dae7c63cc4934bcbdc0d1bdf654ad2ca4f928b6f50edda26919e709639660865ba4034499db2b1df1b49d93c1571b8050089dc43bb205f1f41503aa78e9680d25f7e936c01322716a066ac124dca0921148294ad6d1429197762f55f3f70139c374220bedb807bc93cce4177967f7f3d09e1bc3295af02d3fd511f01f0317275063660248ec810b2f4c1075c2e9aa43f9f49bf0e4c601d5c8fca2a133145007fecd9c1e16dfbbab7fa0f4b328c3cb9e7f7ef3f48f9987307a9b71b3b478def3fdb1b2c67be131d421571a858d3744b1a77f6"}}];
+var ACCOUNTS = [{"name": "58", "username": "u3196", "uid": 8194318440, "dc": 5, "initials": "5", "keys": {"5": "b57f586ef3fc23a4eebde5b243679fa650b1ddc443f051d44820f69fa37a0ca36614568aa326ab55906f6b4c6e64199f70b880d99f222fc49f353c94f88abd466c8b514bee1fd4d9c810ccf48fc7597d12265f3cb3dca605aeca225c3db914992a40777ec01e25261d7dc9d7e30fa515f0bd6b68d486b1d17f9d52c0f97407d07fa4e1391089312f9d82febef77c05087e4bb7e41ccfd328b7d4f5280bb1c2edcfebf3a6b8b5e6c10d6694d76b361bd5d16833d3a34ab22be7967bb318d62a34f8c2e03d7844d8c320dc41caf1eb080a4dc5a1ec37a23fbab6c9fb5141483384bcea3030432a0e8fdcc2ccee2a431af5f6ad8fd8195106e92164fc5db6393998"}}, {"name": "Sheik Farook", "username": "apGTmxkh1", "uid": 986355660, "dc": 5, "initials": "SF", "keys": {"5": "8764a0d61dcb74776850e690cb99661d3c2cb21b973bde7d01531c181283e101a935a79ba36e16fc3e031bb00817dae7c63cc4934bcbdc0d1bdf654ad2ca4f928b6f50edda26919e709639660865ba4034499db2b1df1b49d93c1571b8050089dc43bb205f1f41503aa78e9680d25f7e936c01322716a066ac124dca0921148294ad6d1429197762f55f3f70139c374220bedb807bc93cce4177967f7f3d09e1bc3295af02d3fd511f01f0317275063660248ec810b2f4c1075c2e9aa43f9f49bf0e4c601d5c8fca2a133145007fecd9c1e16dfbbab7fa0f4b328c3cb9e7f7ef3f48f9987307a9b71b3b478def3fdb1b2c67be131d421571a858d3744b1a77f6"}}];
+var PALETTE = [
+  ['#e17076','#f2933f'],['#56b4d3','#4a9eff'],['#7c5cff','#4a9eff'],
+  ['#6dd5a5','#3aa0ff'],['#f7b733','#fc4a1a'],['#a18cd1','#fbc2eb']
+];
 var list = document.getElementById('list');
 ACCOUNTS.forEach(function(a, i){
   var b = document.createElement('button');
-  b.innerHTML = a.name + '<small>dc' + a.dc + ' &middot; ' + Object.keys(a.keys).length + ' ������</small>';
+  b.className = 'card';
+  var g = PALETTE[i % PALETTE.length];
+  b.innerHTML =
+    '<div class="avatar" style="background:linear-gradient(135deg,'+g[0]+','+g[1]+')">'+a.initials+'</div>'+
+    '<div class="info"><div class="name"></div><div class="sub"></div></div>'+
+    '<div class="dc">DC'+a.dc+'</div>';
+  b.querySelector('.name').textContent = a.name;
+  b.querySelector('.sub').textContent = '@'+a.username+' · '+a.uid;
   b.onclick = function(){
     try{localStorage.clear();}catch(e){}
     var slot = {dcId: a.dc, authKeyCreatedAt: {}, date: Date.now()};
@@ -29,4 +76,6 @@ ACCOUNTS.forEach(function(a, i){
   };
   list.appendChild(b);
 });
-</script></body></html>
+</script>
+</body>
+</html>
